@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.PlayersDAO;
-import lt.vu.entities.Player;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;

@@ -1,7 +1,5 @@
 package lt.vu.persistence;
 
-import lt.vu.entities.Player;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

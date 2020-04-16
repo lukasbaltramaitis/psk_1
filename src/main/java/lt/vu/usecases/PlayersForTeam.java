@@ -13,8 +13,6 @@ import lombok.Setter;
 import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.persistence.TeamsDAO;
-import lt.vu.entities.Player;
-import lt.vu.entities.Team;
 
 @Model
 public class PlayersForTeam implements Serializable {
