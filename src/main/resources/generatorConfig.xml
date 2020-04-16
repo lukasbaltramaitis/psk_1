@@ -4,26 +4,35 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="PlayersDB" targetRuntime="MyBatis3Simple">
-        <jdbcConnection driverClass="org.h2.Driver"
-                        connectionURL="jdbc:h2:~/h2database/PlayerDB;AUTO_SERVER=TRUE"
-                        userId="as"
-                        password="as">
+    <context id="ww2myboardgamedb" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ww2myboardgamedb?serverTimezone=UTC"
+                        userId="root"
+                        password="Lukas123456">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="lt.vu.mybatis.model" targetProject="MAVEN" />
+        <javaModelGenerator targetPackage="lt.vu.mybatis.model" targetProject="C:\Users\Lukas\IdeaProjects\java-ee-practice\src\main\java" />
 
-        <sqlMapGenerator targetPackage="lt.vu.usecases.mybatis.xml" targetProject="MAVEN" />
-        <javaClientGenerator type="XMLMAPPER" targetPackage="lt.vu.mybatis.dao" targetProject="MAVEN" />
+        <sqlMapGenerator targetPackage="mybatis.xml" targetProject="C:\Users\Lukas\IdeaProjects\java-ee-practice\src\main\resources" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="lt.vu.mybatis.dao" targetProject="C:\Users\Lukas\IdeaProjects\java-ee-practice\src\main\java" />
 
 
-        <table schema="public" tableName="team">
+        <table schema="public" tableName="actions" domainObjectName="Action" >
+            <property name="useActualColumnNames" value="true"/>
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
-            <ignoreColumn column="opt_lock_version" />
         </table>
-        <table schema="public" tableName="player">
+        <table schema="public" tableName="players" domainObjectName="Player">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
-            <ignoreColumn column="opt_lock_version" />
+
+        </table>
+        <table schema="public" tableName="countries" domainObjectName="Country">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+
+        </table>
+        <table schema="public" tableName="map" domainObjectName="Map">
+        </table>
+        <table schema="public" tableName="territories" domainObjectName="Territory">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC" />
         </table>
     </context>
 </generatorConfiguration>
