@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <meta http-equiv="refresh" content="1"/>
+</h:head>
+<h:body>
+    <h1>Hello #{countryForPlayer.player.name}</h1>
+    <h2>Please select country: </h2>
+    <ol>
+        <ui:repeat value="#{countryForPlayer.unusedCountries}" var="country">
+            <li>
+                <h:form>
+                    <label>#{country.name}</label>
+                    <h:commandButton value="Choose Country" action="#{countryForPlayer.chooseCountry(country.id)}" />
+                </h:form>
+            </li>
+        </ui:repeat>
+    </ol>
+    <h2>Your countries: </h2>
+    <c:if test="#{countryForPlayer.playerCountries.size > 0}">
+        <ol>
+            <ui:repeat value="#{countryForPlayer.playerCountries}" var="playerCountry">
+                <li>
+                    <label>#{playerCountry.name}</label>
+                </li>
+            </ui:repeat>
+        </ol>
+    </c:if>
+    <c:otherwise>
+        <label> You haven't chosen any country yet!</label>
+    </c:otherwise>
+    <h:link value="Begin game!" outcome=""/>
+</h:body>
+</html>

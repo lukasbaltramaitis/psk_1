@@ -34,6 +34,6 @@ public class Players implements Serializable {
             player = playerToCreate;
 
         }
-        return "player?faces-redirect=true&id=" + player.getId() + "&password=" + player.getPassword();
+        return "player?faces-redirect=true&playerId=" + player.getId() + "&password=" + player.getPassword();
     }
 }

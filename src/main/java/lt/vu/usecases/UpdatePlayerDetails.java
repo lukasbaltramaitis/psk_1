@@ -43,6 +43,6 @@ public class UpdatePlayerDetails implements Serializable {
         } catch (OptimisticLockException e) {
             return "/playerDetails.xhtml?faces-redirect=true&playerId=" + this.player.getId() + "&error=optimistic-lock-exception";
         }
-        return "players.xhtml?teamId=" + this.player.getTeam().getId() + "&faces-redirect=true";
+        return "player.xhtml?teamId=" + this.player.getTeam().getId() + "&faces-redirect=true";
     }
 }
