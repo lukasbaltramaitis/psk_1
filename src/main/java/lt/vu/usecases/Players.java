@@ -7,11 +7,13 @@ import lt.vu.entities.Player;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.PasswordGenerator;
 
+import javax.faces.context.FacesContext;
 import javax.transaction.Transactional;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.Map;
 
 @Model
 public class Players implements Serializable {
@@ -27,13 +29,10 @@ public class Players implements Serializable {
         String playerToCreateName = playerToCreate.getName();
         Player player = playersDAO.findByName(playerToCreateName);
         if(player == null){
-            PasswordGenerator passwordGenerator = new PasswordGenerator();
-            String password = passwordGenerator.generatePassword(playerToCreateName);
-            playerToCreate.setPassword(password);
             playersDAO.persist(playerToCreate);
             player = playerToCreate;
-
         }
-        return "player?faces-redirect=true&playerId=" + player.getId() + "&password=" + player.getPassword();
+       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", player.getId());
+        return "player?faces-redirect=true";
     }
 }

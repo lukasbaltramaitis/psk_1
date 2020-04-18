@@ -7,6 +7,7 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
+    <title>Country selection</title>
     <meta http-equiv="refresh" content="1"/>
 </h:head>
 <h:body>
@@ -35,6 +36,6 @@
     <c:otherwise>
         <label> You haven't chosen any country yet!</label>
     </c:otherwise>
-    <h:link value="Begin game!" outcome=""/>
+    <h:link value="Begin game!" outcome="roundStart"/>
 </h:body>
 </html>

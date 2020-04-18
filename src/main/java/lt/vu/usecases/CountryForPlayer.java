@@ -25,8 +25,6 @@ public class CountryForPlayer {
     private TerritoryMapper territoryMapper;
     @Inject
     private PlayersDAO playersDAO;
-    @Inject
-    private Authenticator authenticator;
     @Getter
     private List<Country> unusedCountries;
     @Getter
@@ -36,11 +34,8 @@ public class CountryForPlayer {
 
     @PostConstruct
     public void init() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        authenticator.authenticate(facesContext);
-        Map<String, String> requestParameters =
-                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        int playerId = Integer.parseInt(requestParameters.get("playerId"));
+        int playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().get("playerId").toString());
         loadPlayer(playerId);
         loadPlayerCountries(playerId);
         loadAllCountries();
@@ -50,9 +45,9 @@ public class CountryForPlayer {
     public String chooseCountry(int countryId){
         int playerId = player.getId();
         territoryMapper.updateByCountryPlayerId(countryId, playerId);
-        loadAllCountries();
-        loadPlayer(playerId);
-        return "player?faces-redirect=true&playerId=" + playerId + "&password=" + player.getPassword();
+        //loadAllCountries();
+        //loadPlayerCountries(playerId);
+        return "player?faces-redirect=true";
     }
 
     private void loadAllCountries(){
