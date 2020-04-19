@@ -95,6 +95,7 @@ public class ActionsForPlayer implements Serializable {
             action.setAction(actionStrParams[0]);
         }
         action.setTerritoryAId(territoryAId);
+        territoryMapper.updateByState(1, territoryAId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
         action.setRoundNr(gameService.getRoundNr());
         action.setPlayerId(player.getId());

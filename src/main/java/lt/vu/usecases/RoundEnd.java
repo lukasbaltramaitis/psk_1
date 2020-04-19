@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import lt.vu.entities.Action;
+import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.persistence.ActionsDAO;
 import lt.vu.services.GameService;
 
@@ -16,13 +17,18 @@ import java.util.List;
 @Model
 public class RoundEnd {
     @Inject
+    private TerritoryMapper territoryMapper;
+    @Inject
     private GameService gameService;
     @Inject
     private ActionsDAO actionsDAO;
     @Getter @Setter
     private List<Action> actions;
+    private int playerId;
     @PostConstruct
     public void init() {
+        playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().get("playerId").toString());
         loadActions(gameService.getRoundNr());
     }
 
@@ -40,6 +46,7 @@ public class RoundEnd {
                 }
             }
         }
+        territoryMapper.updateStateByPlayer(0, playerId);
         return "roundEnd.xhtml?faces-redirect=true";
     }
 
