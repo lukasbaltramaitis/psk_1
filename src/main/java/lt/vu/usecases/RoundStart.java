@@ -47,14 +47,14 @@ public class RoundStart implements Serializable {
         if(removeTerritoryId != -1) {
             territoryMapper.unassignPlayerId(removeTerritoryId);
         }
-        return "roundStart?faces-redirect=true";
+        return "roundStart.xhtml?faces-redirect=true";
     }
     @Transactional
     public String assignTerritory(){
         if(addTerritoryId != -1 && player != null) {
             territoryMapper.assignPlayerId(addTerritoryId, player.getId());
         }
-        return "roundStart?faces-redirect=true";
+        return "roundStart.xhtml?faces-redirect=true";
     }
 
     private void loadPlayer(int playerId){

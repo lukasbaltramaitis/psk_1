@@ -36,6 +36,6 @@ public class Players implements Serializable {
             player = playerToCreate;
         }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", player.getId());
-        return "player?faces-redirect=true";
+        return "player.xhtml?faces-redirect=true";
     }
 }

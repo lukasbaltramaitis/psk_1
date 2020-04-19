@@ -64,7 +64,7 @@ public class ActionsForPlayer implements Serializable {
                 }
             }
         }
-        return "actions?faces-redirect=true";
+        return "actions.xhtml?faces-redirect=true";
     }
 
     public void selectStringValueChanged(ValueChangeEvent vce)
@@ -98,7 +98,7 @@ public class ActionsForPlayer implements Serializable {
             }
         }
         actionsDAO.persist(action);
-        return "actions?faces-redirect=true";
+        return "actions.xhtml?faces-redirect=true";
     }
 
     private void loadPlayer(int playerId){

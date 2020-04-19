@@ -47,7 +47,7 @@ public class CountryForPlayer {
         territoryMapper.updateByCountryPlayerId(countryId, playerId);
         //loadAllCountries();
         //loadPlayerCountries(playerId);
-        return "player?faces-redirect=true";
+        return "player.xhtml?faces-redirect=true";
     }
 
     private void loadAllCountries(){
