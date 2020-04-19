@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Player;
 import lt.vu.persistence.PlayersDAO;
+import lt.vu.services.GameService;
 import lt.vu.services.PasswordGenerator;
 
 import javax.faces.context.FacesContext;
@@ -17,6 +18,8 @@ import java.util.Map;
 
 @Model
 public class Players implements Serializable {
+    @Inject
+    private GameService gameService;
 
     @Inject
     private PlayersDAO playersDAO;
@@ -32,7 +35,7 @@ public class Players implements Serializable {
             playersDAO.persist(playerToCreate);
             player = playerToCreate;
         }
-       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", player.getId());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", player.getId());
         return "player?faces-redirect=true";
     }
 }

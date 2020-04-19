@@ -29,4 +29,8 @@ public class PlayersDAO {
     public Player update(Player player){
         return em.merge(player);
     }
+
+    public int getCount(){
+        return (int) em.createQuery("select count(p) from Player p").getSingleResult();
+    }
 }
