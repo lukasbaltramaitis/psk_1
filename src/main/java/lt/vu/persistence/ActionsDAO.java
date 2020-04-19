@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @ApplicationScoped
 public class ActionsDAO {
@@ -23,5 +24,10 @@ public class ActionsDAO {
 
     public Action update(Action action){
         return em.merge(action);
+    }
+
+    public List<Action> selectByRound(int roundNr){
+        TypedQuery<Action> query = em.createQuery("select a from Action a where a.roundNr = ?1", Action.class);
+        return query.setParameter(1, roundNr).getResultList();
     }
 }

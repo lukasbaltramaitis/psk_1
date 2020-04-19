@@ -11,17 +11,30 @@ import java.io.Serializable;
 @ApplicationScoped
 @Model
 public class GameService implements Serializable {
-    private boolean allPlayersRegistered = false;
     private int playersRegForRndStart = 0;
+    private int playersRegForRndEnd = 0;
     @Inject
     private PlayersDAO playersDAO;
     @Getter @Setter
     private int roundNr = 1;
 
+    private int newRoundNr;
+
     public void registerPlayerForRoundStart(){
         playersRegForRndStart++;
     }
+    public void registerPlayerForRoundEnd(){
+        playersRegForRndEnd++;
+    }
+    public boolean canEndRound(){
+        newRoundNr = roundNr + 1;
+        int playersNr = playersDAO.getCount();
+        return playersNr == playersRegForRndEnd;
+    }
     public boolean canStartRound(){
+        if(newRoundNr != roundNr){
+            roundNr = newRoundNr;
+        }
         int playersNr = playersDAO.getCount();
         return playersNr == playersRegForRndStart;
     }

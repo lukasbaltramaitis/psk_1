@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head>
+    <title>Round End</title>
+</head>
+<body>
+    <h1>#{gameService.roundNr}</h1>
+    <h2>All round Actions ordered by priority and creation date</h2>
+    <table>
+        <tr>
+            <th>
+                Priority
+            </th>
+            <th>
+                Register date
+            </th>
+            <th>
+                Player name
+            </th>
+            <th>
+                Action type
+            </th>
+            <th>
+                Country from
+            </th>
+            <th>
+                Territory from
+            </th>
+            <th>
+                Country to
+            </th>
+            <th>
+                Territory to
+            </th>
+        </tr>
+        <ui:repeat value="#{roundEnd.actions}" var="action">
+            <tr>
+                <td>#{action.priority}</td>
+                <td>#{action.creationDate}</td>
+                <td>#{action.getPlayersByPlayerId.name}</td>
+                <td>#{action.action}</td>
+                <td>#{action.getTerritoriesByTerritoryAId.getCountriesByCountryId.name}</td>
+                <td>#{action.getTerritoriesByTerritoryAId.name}</td>
+                <td>#{action.getTerritoriesByTerritoryBId.getCountriesByCountryId.name}</td>
+                <td>#{action.getTerritoriesByTerritoryBId.name}</td>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h:link value="Start new round" outcome="#{actionsForPlayer.startRound}"/>
+</body>
+</html>

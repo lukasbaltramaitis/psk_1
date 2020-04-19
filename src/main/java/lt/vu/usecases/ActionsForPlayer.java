@@ -15,6 +15,7 @@ import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -53,7 +54,6 @@ public class ActionsForPlayer implements Serializable {
         gameService.registerPlayerForRoundStart();
         long startTimestamp = System.currentTimeMillis();
         while(true){
-
             if(gameService.canStartRound()){
                 break;
             }
@@ -87,10 +87,17 @@ public class ActionsForPlayer implements Serializable {
             }
         }
     }
+    @Transactional
     public String registerAction(int territoryAId){
+        String actionStr = action.getAction();
+        String[] actionStrParams = actionStr.split("_");
+        if(actionStrParams.length > 0){
+            action.setAction(actionStrParams[0]);
+        }
         action.setTerritoryAId(territoryAId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
         action.setRoundNr(gameService.getRoundNr());
+        action.setPlayerId(player.getId());
         if(priority > 0) {
             priority -= action.getPriority();
             if(priority < 0){
