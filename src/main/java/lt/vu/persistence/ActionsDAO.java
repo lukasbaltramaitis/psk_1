@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,15 @@ public class ActionsDAO {
         }
         catch (NoResultException exe){
             return new ArrayList<>();
+        }
+    }
+    public int delete(){
+        try {
+            Query query = em.createQuery("delete from Action a where a.id > 0");
+            return query.executeUpdate();
+        }
+        catch (NoResultException exe){
+            return 0;
         }
     }
 }

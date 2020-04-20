@@ -12,24 +12,41 @@
     <title>Round Start</title>
     <meta http-equiv="refresh" content="10"/>
 </head>
-<body>
+<body style="margin-left: 20px">
     <h1>Round: #{gameService.roundNr} </h1>
     <h2>Delete your lost territories: </h2>
     <h:form>
-        <h:selectOneMenu value="#{roundStart.removeTerritoryId}">
-            <f:selectItems value="#{roundStart.playerTerritories}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
-        </h:selectOneMenu>
-        <h:commandButton value="Delete Selected" action="#{roundStart.unassignTerritory}"/>
+        <table>
+            <tr>
+                <td>
+                    <h:selectOneMenu value="#{roundStart.removeTerritoryId}">
+                        <f:selectItems value="#{roundStart.playerTerritories}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:commandButton value="Delete Selected" action="#{roundStart.unassignTerritory}"/>
+                </td>
+            </tr>
+        </table>
     </h:form>
     <h2>Assign your gain territories: </h2>
     <h:form>
-        <h:selectOneMenu value="#{roundStart.addTerritoryId}">
-            <f:selectItems value="#{roundStart.freeTerritories}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
-        </h:selectOneMenu>
-        <h:commandButton value="Add Selected" action="#{roundStart.assignTerritory}"/>
+        <table>
+            <tr>
+                <td>
+                    <h:selectOneMenu value="#{roundStart.addTerritoryId}">
+                        <f:selectItems value="#{roundStart.freeTerritories}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
+                    </h:selectOneMenu>
+                </td>
+                <td>
+                    <h:commandButton value="Add Selected" action="#{roundStart.assignTerritory}"/>
+                </td>
+            </tr>
+        </table>
     </h:form>
+    <br/>
     <h:form>
-        <h:commandButton value="Start Round" action="#{actionsForPlayer.startRound}"/>
+        <h:button value="Start Round" outcome="roundStart.xhtml"/>
     </h:form>
 </body>
 </html>

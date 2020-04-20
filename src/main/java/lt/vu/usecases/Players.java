@@ -9,17 +9,15 @@ import lt.vu.services.GameService;
 import lt.vu.services.PasswordGenerator;
 
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.transaction.Transactional;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.Map;
-
 @Model
 public class Players implements Serializable {
-    @Inject
-    private GameService gameService;
 
     @Inject
     private PlayersDAO playersDAO;

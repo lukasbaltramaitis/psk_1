@@ -11,10 +11,12 @@ import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -22,9 +24,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Model
+@Named
+@ViewScoped
 public class ActionsForPlayer implements Serializable {
+    @Getter @Setter
     private Player player;
+    @Getter @Setter
+    private int territoryBId;
     @Inject
     private PlayersDAO playersDAO;
     @Inject
@@ -34,13 +40,13 @@ public class ActionsForPlayer implements Serializable {
     @Getter
     private List<Territory> playerTerritories;
     @Getter @Setter
-    private int priority = 10;
-    @Getter @Setter
     private Action action = new Action();
     @Inject
     private GameService gameService;
     @Getter @Setter
     private List<Territory>territoriesForB;
+    @Getter @Setter
+    private int priority;
 
     @PostConstruct
     public void init() {
@@ -67,44 +73,42 @@ public class ActionsForPlayer implements Serializable {
         return "actions.xhtml?faces-redirect=true";
     }
 
-    public void selectStringValueChanged()
+    public void selectStringValueChanged(int territoryId)
     {
-        String actionValueParams = action.getAction();
-        String[] params = actionValueParams.split("_");
-        if(params.length > 1){
-            int territoryId = Integer.parseInt(params[1]);
-            switch (params[0]){
-                case "attack":
-                    territoriesForB = territoryMapper.selectNeighbours(territoryId);
-                    break;
-                case "move":
-                    territoriesForB = territoryMapper.selectByPlayer(player.getId());
-                    break;
-                case "defend":
-                case "collect":
-                    territoriesForB = new ArrayList<>();
-                    break;
-            }
+        switch (action.getAction()){
+            case "attack":
+                territoriesForB = territoryMapper.selectNeighbours(territoryId, player.getId());
+                break;
+            case "move":
+                territoriesForB = territoryMapper.selectByPlayer(player.getId());
+                break;
+            case "defend":
+            case "collect":
+                territoriesForB = new ArrayList<>();
+                break;
+            default:
+                action.setAction("");
+                break;
         }
     }
     @Transactional
     public String registerAction(int territoryAId){
-        String actionStr = action.getAction();
-        String[] actionStrParams = actionStr.split("_");
-        if(actionStrParams.length > 0){
-            action.setAction(actionStrParams[0]);
-        }
-        action.setTerritoryAId(territoryAId);
         territoryMapper.updateByState(1, territoryAId);
+        action.setTerritoryAId(territoryAId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
         action.setRoundNr(gameService.getRoundNr());
         action.setPlayerId(player.getId());
-        if(priority > 0) {
-            priority -= action.getPriority();
-            if(priority < 0){
-                priority = 0;
-            }
+        int actionPriority = priority;
+        int money = player.getMoney();
+        if(actionPriority > money){
+            action.setPriority(money);
+            money = 0;
         }
+        else{
+            money = money - actionPriority;
+        }
+        player.setMoney(money);
+        playersDAO.update(player);
         actionsDAO.persist(action);
         return "actions.xhtml?faces-redirect=true";
     }
@@ -113,6 +117,6 @@ public class ActionsForPlayer implements Serializable {
         player = playersDAO.findOne(playerId);
     }
     private void loadPlayerTerritories(int playerId){
-        playerTerritories = territoryMapper.selectByPlayer(playerId);
+        playerTerritories = territoryMapper.selectByPlayerAndState(playerId);
     }
 }

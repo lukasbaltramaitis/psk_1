@@ -5,17 +5,21 @@ import lombok.Setter;
 import lt.vu.entities.Player;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.mybatis.model.Territory;
+import lt.vu.persistence.ActionsDAO;
 import lt.vu.persistence.PlayersDAO;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
-
-@Model
+@ViewScoped
+@Named
+@Getter @Setter
 public class RoundStart implements Serializable {
     @Inject
     private PlayersDAO playersDAO;
@@ -56,7 +60,6 @@ public class RoundStart implements Serializable {
         }
         return "roundStart.xhtml?faces-redirect=true";
     }
-
     private void loadPlayer(int playerId){
         player = playersDAO.findOne(playerId);
     }

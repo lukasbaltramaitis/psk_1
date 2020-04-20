@@ -5,11 +5,16 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 >
 <h:head/>
-<h:body>
+<h:body style="margin-left: 20px">
     <h2>Login:</h2>
     <h:form>
-        <h:inputText value="#{players.playerToCreate.name}" required="true"/>
-        <h:commandButton value="Login" action="#{players.login}"/>
+        <div>
+            <h:inputText value="#{players.playerToCreate.name}" required="true"/>
+        </div>
+        <br/>
+        <div>
+            <h:commandButton value="Login" action="#{players.login}"/>
+        </div>
     </h:form>
 </h:body>
 </html>

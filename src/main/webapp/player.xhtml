@@ -10,19 +10,24 @@
     <title>Country selection</title>
     <meta http-equiv="refresh" content="10"/>
 </h:head>
-<h:body>
+<h:body style="margin-left: 20px">
     <h1>Hello #{countryForPlayer.player.name}</h1>
     <h2>Please select country: </h2>
-    <ol>
+    <table>
         <ui:repeat value="#{countryForPlayer.unusedCountries}" var="country">
-            <li>
+            <tr>
                 <h:form>
-                    <label>#{country.name}</label>
-                    <h:commandButton value="Choose Country" action="#{countryForPlayer.chooseCountry(country.id)}" />
+                    <td>
+                        <label>#{country.name}</label>
+                    </td>
+                    <td>
+                        <h:commandButton value="Choose Country" action="#{countryForPlayer.chooseCountry(country.id)}" />
+                    </td>
                 </h:form>
-            </li>
+            </tr>
         </ui:repeat>
-    </ol>
+    </table>
+
     <h2>Your countries: </h2>
     <c:if test="#{countryForPlayer.playerCountries != null}">
         <ol>
@@ -33,9 +38,14 @@
             </ui:repeat>
         </ol>
     </c:if>
-    <c:otherwise>
-        <label> You haven't chosen any country yet!</label>
-    </c:otherwise>
-    <h:button value="Begin game!" outcome="roundStart.xhtml"/>
+    <c:if test="#{countryForPlayer.playerCountries == null}">
+        <div>
+            <label> You haven't chosen any country yet!</label>
+        </div>
+    </c:if>
+    <br/>
+    <div>
+        <h:button value="Begin game!" outcome="roundStart.xhtml"/>
+    </div>
 </h:body>
 </html>

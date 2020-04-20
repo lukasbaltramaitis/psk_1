@@ -4,18 +4,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import lt.vu.entities.Action;
+import lt.vu.mybatis.dao.PlayerMapper;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.persistence.ActionsDAO;
+import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
-
 @Model
 public class RoundEnd {
+    @Inject
+    private PlayerMapper playerMapper;
     @Inject
     private TerritoryMapper territoryMapper;
     @Inject
@@ -31,7 +36,7 @@ public class RoundEnd {
                 getSessionMap().get("userId").toString());
         loadActions(gameService.getRoundNr());
     }
-
+    @Transactional
     public String endRound(){
         gameService.registerPlayerForRoundEnd();
         long startTimestamp = System.currentTimeMillis();
@@ -46,6 +51,7 @@ public class RoundEnd {
                 }
             }
         }
+        playerMapper.setMoneyBack();
         territoryMapper.updateStateByPlayer(0, playerId);
         return "roundEnd.xhtml?faces-redirect=true";
     }

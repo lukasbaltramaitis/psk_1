@@ -9,7 +9,7 @@ public class Player {
     private int id;
     private byte isAi;
     private String name;
-    private Integer money;
+    private Integer money = 10;
     private String password;
     private Collection<Action> actionsById;
     private Collection<Territory> territoriesById;

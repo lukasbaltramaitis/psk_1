@@ -11,31 +11,44 @@
 <h:head>
     <title>Actions</title>
 </h:head>
-<body>
+<body style="margin-left: 20px">
     <h1>Choose actions: </h1>
-    <ol>
+    <h3>You have #{actionsForPlayer.player.money} priority points to use.</h3>
+    <table>
         <ui:repeat value="#{actionsForPlayer.playerTerritories}" var="territory">
-            <li>
+            <tr>
                 <h:form>
-                    <label>#{territory.name}</label>
-                    <h:selectOneMenu value="#{actionsForPlayer.action.action}">
-                        <f:ajax event="valueChange" render="territoryB" listener="#{actionsForPlayer.selectStringValueChanged}" />
-                        <f:selectItem itemValue="attack_#{territory.id}" itemLabel="Attack" />
-                        <f:selectItem itemValue="move_#{territory.id}" itemLabel="Move" />
-                        <f:selectItem itemValue="defend_#{territory.id}" itemLabel="Defend" />
-                        <f:selectItem itemValue="collect_#{territory.id}" itemLabel="Collect Money"/>
-                    </h:selectOneMenu>
-                    <h:inputText value="#{actionsForPlayer.action.priority}" required="true">
-                        <f:validateLongRange maximum="#{actionsForPlayer.priority}" minimum="0"/>
-                    </h:inputText>
-                    <h:selectOneMenu id="territoryB" value="#{actionsForPlayer.action.territoryBId}">
-                        <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
-                    </h:selectOneMenu>
-                    <h:commandButton value="Add Action" action="#{actionsForPlayer.registerAction(territory.id)}"/>
+                    <td>
+                        <label>#{territory.name}</label>
+                    </td>
+                    <td>
+                        <h:selectOneMenu value="#{actionsForPlayer.action.action}">
+                            <f:ajax event="valueChange" render="territoryB" listener="#{actionsForPlayer.selectStringValueChanged(territory.id)}" />
+                            <f:selectItem itemValue="collect" itemLabel="Collect Money"/>
+                            <f:selectItem itemValue="defend" itemLabel="Defend" />
+                            <f:selectItem itemValue="attack" itemLabel="Attack" />
+                            <f:selectItem itemValue="move" itemLabel="Move" />
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:inputText value="#{actionsForPlayer.priority}" converter="javax.faces.Integer">
+                            <f:validateLongRange maximum="#{actionsForPlayer.player.money}" minimum="0"/>
+                        </h:inputText>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="territoryB" value="#{actionsForPlayer.action.territoryBId}" converter="javax.faces.Integer">
+                            <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="territoryB" itemValue="#{territoryB.id}" itemLabel="#{territoryB.name}"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:commandButton value="Add Action" action="#{actionsForPlayer.registerAction(territory.id)}"/>
+                    </td>
                 </h:form>
-            </li>
+            </tr>
+
         </ui:repeat>
-    </ol>
+    </table>
+
     <h:form>
         <h:commandButton value="End Round" action="#{roundEnd.endRound}"/>
     </h:form>
