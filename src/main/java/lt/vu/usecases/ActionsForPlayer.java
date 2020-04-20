@@ -40,12 +40,12 @@ public class ActionsForPlayer implements Serializable {
     @Inject
     private GameService gameService;
     @Getter @Setter
-    private List<Territory>territoriesForB = territoryMapper.selectAll();
+    private List<Territory>territoriesForB;
 
     @PostConstruct
     public void init() {
         int playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().get("playerId").toString());
+                getSessionMap().get("userId").toString());
         loadPlayer(playerId);
         loadPlayerTerritories(playerId);
     }
@@ -67,9 +67,9 @@ public class ActionsForPlayer implements Serializable {
         return "actions.xhtml?faces-redirect=true";
     }
 
-    public void selectStringValueChanged(ValueChangeEvent vce)
+    public void selectStringValueChanged()
     {
-        String actionValueParams = vce.getNewValue().toString();
+        String actionValueParams = action.getAction();
         String[] params = actionValueParams.split("_");
         if(params.length > 1){
             int territoryId = Integer.parseInt(params[1]);

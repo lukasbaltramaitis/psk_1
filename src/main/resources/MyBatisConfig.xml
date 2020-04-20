@@ -6,7 +6,6 @@
     <typeAliases>
         <typeAlias type="lt.vu.mybatis.model.Action" alias="Action"/>
         <typeAlias type="lt.vu.mybatis.model.Country" alias="Country"/>
-        <typeAlias type="lt.vu.mybatis.model.Map" alias="Map"/>
         <typeAlias type="lt.vu.mybatis.model.Player" alias="Player"/>
         <typeAlias type="lt.vu.mybatis.model.Territory" alias="Territory"/>
     </typeAliases>
@@ -14,15 +13,15 @@
         <environment id="development">
             <transactionManager type="MANAGED"/>
             <dataSource type="JNDI">
-                <property name="data_source" value="PlayersDataSource"/>
+                <property name="data_source" value="MyDataSource"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mybatis.xml/ActionMapper.xml"/>
-        <mapper resource="mybatis.xml/CountryMapper.xml"/>
-        <mapper resource="mybatis.xml/MapMapper.xml"/>
-        <mapper resource="mybatis.xml/PlayerMapper.xml"/>
-        <mapper resource="mybatis.xml/PositionMapper.xml"/>
+        <mapper resource="mybatis/xml/ActionMapper.xml"/>
+        <mapper resource="mybatis/xml/CountryMapper.xml"/>
+        <mapper resource="mybatis/xml/MapMapper.xml"/>
+        <mapper resource="mybatis/xml/PlayerMapper.xml"/>
+        <mapper resource="mybatis/xml/TerritoryMapper.xml"/>
     </mappers>
 </configuration>

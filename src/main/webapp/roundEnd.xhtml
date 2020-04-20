@@ -45,15 +45,17 @@
             <tr>
                 <td>#{action.priority}</td>
                 <td>#{action.creationDate}</td>
-                <td>#{action.getPlayersByPlayerId.name}</td>
+                <td>#{action.getPlayersByPlayerId().name}</td>
                 <td>#{action.action}</td>
-                <td>#{action.getTerritoriesByTerritoryAId.getCountriesByCountryId.name}</td>
-                <td>#{action.getTerritoriesByTerritoryAId.name}</td>
-                <td>#{action.getTerritoriesByTerritoryBId.getCountriesByCountryId.name}</td>
-                <td>#{action.getTerritoriesByTerritoryBId.name}</td>
+                <td>#{action.getTerritoriesByTerritoryAId().getCountriesByCountryId().name}</td>
+                <td>#{action.getTerritoriesByTerritoryAId().name}</td>
+                <td>#{action.getTerritoriesByTerritoryBId().getCountriesByCountryId().name}</td>
+                <td>#{action.getTerritoriesByTerritoryBId().name}</td>
             </tr>
         </ui:repeat>
     </table>
-    <h:link value="Start new round" outcome="#{actionsForPlayer.startRound}"/>
+    <h:form>
+        <h:commandButton value="Start new Round" action="#{actionsForPlayer.startRound}"/>
+    </h:form>
 </body>
 </html>

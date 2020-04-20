@@ -28,7 +28,7 @@ public class RoundEnd {
     @PostConstruct
     public void init() {
         playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().get("playerId").toString());
+                getSessionMap().get("userId").toString());
         loadActions(gameService.getRoundNr());
     }
 

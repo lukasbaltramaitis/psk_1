@@ -36,7 +36,7 @@ public class RoundStart implements Serializable {
     @PostConstruct
     public void init() {
         int playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().get("playerId").toString());
+                getSessionMap().get("userId").toString());
         loadPlayer(playerId);
         loadPlayerTerritories(playerId);
         loadFreeTerritories();

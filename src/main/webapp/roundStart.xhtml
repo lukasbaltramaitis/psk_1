@@ -10,7 +10,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <head>
     <title>Round Start</title>
-    <meta http-equiv="refresh" content="1"/>
+    <meta http-equiv="refresh" content="10"/>
 </head>
 <body>
     <h1>Round: #{gameService.roundNr} </h1>
@@ -28,6 +28,8 @@
         </h:selectOneMenu>
         <h:commandButton value="Add Selected" action="#{roundStart.assignTerritory}"/>
     </h:form>
-    <h:link value="Begin round" outcome="#{actionsForPlayer.startRound}"/>
+    <h:form>
+        <h:commandButton value="Start Round" action="#{actionsForPlayer.startRound}"/>
+    </h:form>
 </body>
 </html>

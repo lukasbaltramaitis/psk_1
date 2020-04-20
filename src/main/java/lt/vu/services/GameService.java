@@ -15,10 +15,9 @@ public class GameService implements Serializable {
     private int playersRegForRndEnd = 0;
     @Inject
     private PlayersDAO playersDAO;
-    @Getter @Setter
-    private int roundNr = 1;
+    public static int roundNr = 1;
 
-    private int newRoundNr;
+    private int newRoundNr = 1;
 
     public void registerPlayerForRoundStart(){
         playersRegForRndStart++;
@@ -39,4 +38,7 @@ public class GameService implements Serializable {
         return playersNr == playersRegForRndStart;
     }
 
+    public int getRoundNr() {
+        return roundNr;
+    }
 }

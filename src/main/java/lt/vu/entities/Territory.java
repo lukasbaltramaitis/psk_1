@@ -144,7 +144,7 @@ public class Territory {
     }
 
     @ManyToOne
-    @JoinColumn(name = "countryId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "countryId", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public Country getCountriesByCountryId() {
         return countriesByCountryId;
     }
@@ -154,7 +154,7 @@ public class Territory {
     }
 
     @ManyToOne
-    @JoinColumn(name = "playerId", referencedColumnName = "id")
+    @JoinColumn(name = "playerId", referencedColumnName = "id", insertable = false, updatable = false)
     public Player getPlayersByPlayerId() {
         return playersByPlayerId;
     }

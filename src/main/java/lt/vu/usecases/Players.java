@@ -32,6 +32,7 @@ public class Players implements Serializable {
         String playerToCreateName = playerToCreate.getName();
         Player player = playersDAO.findByName(playerToCreateName);
         if(player == null){
+            playerToCreate.setPassword("null");
             playersDAO.persist(playerToCreate);
             player = playerToCreate;
         }

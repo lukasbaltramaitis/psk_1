@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,11 +32,10 @@ public class CountryForPlayer {
     private List<Country> playerCountries;
     @Getter
     private Player player;
-
     @PostConstruct
     public void init() {
         int playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().get("playerId").toString());
+                getSessionMap().get("userId").toString());
         loadPlayer(playerId);
         loadPlayerCountries(playerId);
         loadAllCountries();
@@ -51,12 +51,15 @@ public class CountryForPlayer {
     }
 
     private void loadAllCountries(){
-        unusedCountries = countryMapper.selectUnusedCountries();
+        List<Country> countries = countryMapper.selectUnusedCountries();
+        unusedCountries = (countries == null) ? new ArrayList<>() : countries;
+
     }
     private void loadPlayer(int playerId){
         player = playersDAO.findOne(playerId);
     }
     private void loadPlayerCountries(int playerId){
-        playerCountries = countryMapper.selectPlayerCountries(playerId);
+        List<Country> countries = countryMapper.selectPlayerCountries(playerId);
+        playerCountries = (countries == null) ? new ArrayList<>() : countries;
     }
 }

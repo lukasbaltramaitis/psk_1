@@ -8,7 +8,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Country selection</title>
-    <meta http-equiv="refresh" content="1"/>
+    <meta http-equiv="refresh" content="10"/>
 </h:head>
 <h:body>
     <h1>Hello #{countryForPlayer.player.name}</h1>
@@ -24,7 +24,7 @@
         </ui:repeat>
     </ol>
     <h2>Your countries: </h2>
-    <c:if test="#{countryForPlayer.playerCountries.size > 0}">
+    <c:if test="#{countryForPlayer.playerCountries != null}">
         <ol>
             <ui:repeat value="#{countryForPlayer.playerCountries}" var="playerCountry">
                 <li>
@@ -36,6 +36,6 @@
     <c:otherwise>
         <label> You haven't chosen any country yet!</label>
     </c:otherwise>
-    <h:link value="Begin game!" outcome="roundStart"/>
+    <h:button value="Begin game!" outcome="roundStart.xhtml"/>
 </h:body>
 </html>

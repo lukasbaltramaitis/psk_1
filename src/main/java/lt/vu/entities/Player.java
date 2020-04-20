@@ -1,6 +1,7 @@
 package lt.vu.entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "players", schema = "ww2myboardgamedb", catalog = "")
@@ -10,6 +11,8 @@ public class Player {
     private String name;
     private Integer money;
     private String password;
+    private Collection<Action> actionsById;
+    private Collection<Territory> territoriesById;
 
     @Id
     @Column(name = "id")
@@ -85,5 +88,23 @@ public class Player {
         result = 31 * result + (money != null ? money.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "playersByPlayerId")
+    public Collection<Action> getActionsById() {
+        return actionsById;
+    }
+
+    public void setActionsById(Collection<Action> actionsById) {
+        this.actionsById = actionsById;
+    }
+
+    @OneToMany(mappedBy = "playersByPlayerId")
+    public Collection<Territory> getTerritoriesById() {
+        return territoriesById;
+    }
+
+    public void setTerritoriesById(Collection<Territory> territoriesById) {
+        this.territoriesById = territoriesById;
     }
 }

@@ -8,9 +8,9 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://java.sun.com/jsf/core">
-<head>
+<h:head>
     <title>Actions</title>
-</head>
+</h:head>
 <body>
     <h1>Choose actions: </h1>
     <ol>
@@ -18,7 +18,8 @@
             <li>
                 <h:form>
                     <label>#{territory.name}</label>
-                    <h:selectOneMenu value="#{actionsForPlayer.action.action}" valueChangeListener="#{actionsForPlayer.selectStringValueChanged}">
+                    <h:selectOneMenu value="#{actionsForPlayer.action.action}">
+                        <f:ajax event="valueChange" render="territoryB" listener="#{actionsForPlayer.selectStringValueChanged}" />
                         <f:selectItem itemValue="attack_#{territory.id}" itemLabel="Attack" />
                         <f:selectItem itemValue="move_#{territory.id}" itemLabel="Move" />
                         <f:selectItem itemValue="defend_#{territory.id}" itemLabel="Defend" />
@@ -27,17 +28,16 @@
                     <h:inputText value="#{actionsForPlayer.action.priority}" required="true">
                         <f:validateLongRange maximum="#{actionsForPlayer.priority}" minimum="0"/>
                     </h:inputText>
-                    <c:if test="#{actionsForPlayer.territoriesForB.size > 0}">
-                        <h:selectOneMenu value="#{actionsForPlayer.action.territoryBId}">
-                            <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
-                        </h:selectOneMenu>
-                    </c:if>
+                    <h:selectOneMenu id="territoryB" value="#{actionsForPlayer.action.territoryBId}">
+                        <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="territory" itemValue="#{territory.id}" itemLabel="#{territory.name}"/>
+                    </h:selectOneMenu>
                     <h:commandButton value="Add Action" action="#{actionsForPlayer.registerAction(territory.id)}"/>
                 </h:form>
             </li>
         </ui:repeat>
     </ol>
-    <h:link value="End Round" outcome="#{roundEnd.endRound}"/>
-
+    <h:form>
+        <h:commandButton value="End Round" action="#{roundEnd.endRound}"/>
+    </h:form>
 </body>
 </html>

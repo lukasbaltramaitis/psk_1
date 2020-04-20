@@ -7,8 +7,8 @@ import javax.persistence.*;
 public class Map {
     private int territoryId;
     private int territoryId1;
-    private Territories territoriesByTerritoryId;
-    private Territories territoriesByTerritoryId1;
+    private Territory territoriesByTerritoryId;
+    private Territory territoriesByTerritoryId1;
 
     @Id
     @Column(name = "territory_id")
@@ -51,8 +51,8 @@ public class Map {
     }
 
     @ManyToOne
-    @JoinColumn(name = "territory_id", referencedColumnName = "id", nullable = false)
-    public Territories getTerritoriesByTerritoryId() {
+    @JoinColumn(name = "territory_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Territory getTerritoriesByTerritoryId() {
         return territoriesByTerritoryId;
     }
 
@@ -60,21 +60,13 @@ public class Map {
         this.territoriesByTerritoryId = territoriesByTerritoryId;
     }
 
-    public void setTerritoriesByTerritoryId(Territories territoriesByTerritoryId) {
-        this.territoriesByTerritoryId = territoriesByTerritoryId;
-    }
-
     @ManyToOne
-    @JoinColumn(name = "territory_id1", referencedColumnName = "id", nullable = false)
-    public Territories getTerritoriesByTerritoryId1() {
+    @JoinColumn(name = "territory_id1", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Territory getTerritoriesByTerritoryId1() {
         return territoriesByTerritoryId1;
     }
 
     public void setTerritoriesByTerritoryId1(Territory territoriesByTerritoryId1) {
-        this.territoriesByTerritoryId1 = territoriesByTerritoryId1;
-    }
-
-    public void setTerritoriesByTerritoryId1(Territories territoriesByTerritoryId1) {
         this.territoriesByTerritoryId1 = territoriesByTerritoryId1;
     }
 }
