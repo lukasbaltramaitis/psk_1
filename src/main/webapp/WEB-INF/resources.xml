@@ -4,11 +4,11 @@
     <!-- see http://tomee.apache.org/datasource-config.html -->
 
     <!-- H2 Database -->
-    <Resource id="PlayersDataSource" type="DataSource">
-        JdbcDriver = org.h2.Driver
-        JdbcUrl = jdbc:h2:~/h2database/PlayerDB;AUTO_SERVER=TRUE;
-        UserName = as
-        Password = as
+    <Resource id="MyDataSource" type="DataSource">
+        JdbcDriver = com.mysql.cj.jdbc.Driver
+        JdbcUrl = "jdbc:mysql://localhost:3306/ww2myboardgamedb?serverTimezone=UTC"
+        UserName = root
+        Password = Lukas123456
         InitialSize = 1
         MaxActive = 10
         MaxWaitTime = 10 seconds

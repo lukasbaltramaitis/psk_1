@@ -5,17 +5,16 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 >
 <h:head/>
-<h:body>
-    <h2>Teams:</h2>
-    <ol>
-        <ui:repeat value="#{teams.allTeams}" var="team">
-            <li><h:link value="#{team.name}" outcome="players?teamId=#{team.id}" /></li>
-        </ui:repeat>
-    </ol>
+<h:body style="margin-left: 20px">
+    <h2>Login:</h2>
     <h:form>
-        <h:inputText value="#{teams.teamToCreate.name}" required="true" />
-        <h:commandButton value="Add new team" action="#{teams.createTeam}" />
+        <div>
+            <h:inputText value="#{players.playerToCreate.name}" required="true"/>
+        </div>
+        <br/>
+        <div>
+            <h:commandButton value="Login" action="#{players.login}"/>
+        </div>
     </h:form>
-    <h:link outcome="myBatis/teams" value="MyBatis implementation"/>
 </h:body>
 </html>

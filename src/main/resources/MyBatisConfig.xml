@@ -4,19 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="lt.vu.mybatis.model.Team" alias="Team"/>
+        <typeAlias type="lt.vu.mybatis.model.Action" alias="Action"/>
+        <typeAlias type="lt.vu.mybatis.model.Country" alias="Country"/>
         <typeAlias type="lt.vu.mybatis.model.Player" alias="Player"/>
+        <typeAlias type="lt.vu.mybatis.model.Territory" alias="Territory"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="MANAGED"/>
             <dataSource type="JNDI">
-                <property name="data_source" value="PlayersDataSource"/>
+                <property name="data_source" value="MyDataSource"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mybatis.xml/TeamMapper.xml"/>
-        <mapper resource="mybatis.xml/PlayerMapper.xml"/>
+        <mapper resource="mybatis/xml/ActionMapper.xml"/>
+        <mapper resource="mybatis/xml/CountryMapper.xml"/>
+        <mapper resource="mybatis/xml/MapMapper.xml"/>
+        <mapper resource="mybatis/xml/PlayerMapper.xml"/>
+        <mapper resource="mybatis/xml/TerritoryMapper.xml"/>
     </mappers>
 </configuration>

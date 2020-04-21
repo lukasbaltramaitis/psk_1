@@ -27,11 +27,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
@@ -47,10 +42,15 @@
             <artifactId>mybatis-cdi</artifactId>
             <version>1.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
+        </dependency>
     </dependencies>
-
     <build>
         <finalName>java-ee-practice</finalName>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -58,7 +58,7 @@
                     <artifactId>mybatis-generator-maven-plugin</artifactId>
                     <version>1.4.0</version>
                     <configuration>
-                        <contexts>PlayersDB</contexts>
+                        <contexts>ww2myboardgamedb</contexts>
                         <verbose>true</verbose>
                     </configuration>
                     <executions>
@@ -71,9 +71,9 @@
                     </executions>
                     <dependencies>
                         <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>1.4.200</version>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>8.0.19</version>
                         </dependency>
                     </dependencies>
                 </plugin>

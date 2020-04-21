@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Actions</title>
+</h:head>
+<body style="margin-left: 20px">
+    <h1>Choose actions: </h1>
+    <h3>You have #{actionsForPlayer.player.money} priority points to use.</h3>
+    <ui:repeat value="#{actionsForPlayer.playerTerritories}" var="territory">
+        <h:form>
+            <table>
+                <tr>
+                    <td>
+                        <label>#{territory.name}</label>
+                    </td>
+                    <td>
+                        <h:selectOneMenu value="#{actionsForPlayer.action.action}">
+                            <f:ajax event="valueChange" render="territoryB_select" listener="#{actionsForPlayer.selectStringValueChanged(territory.id)}" />
+                            <f:selectItem itemValue="collect" itemLabel="Collect Money"/>
+                            <f:selectItem itemValue="defend" itemLabel="Defend" />
+                            <f:selectItem itemValue="attack" itemLabel="Attack" />
+                            <f:selectItem itemValue="move" itemLabel="Move" />
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:inputText value="#{actionsForPlayer.priority}" converter="javax.faces.Integer">
+                            <f:validateLongRange maximum="#{actionsForPlayer.player.money}" minimum="0"/>
+                            <f:ajax event="valueChange"/>
+                        </h:inputText>
+                    </td>
+                    <td>
+                        <h:selectOneMenu id="territoryB_select" value="#{actionsForPlayer.territoryBId}" converter="javax.faces.Integer">
+                            <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="Bterritory" itemValue="#{Bterritory.id}" itemLabel="#{Bterritory.name}"/>
+                            <f:ajax event="valueChange"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        <h:commandButton value="Add Action" action="#{actionsForPlayer.registerAction(territory.id)}"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:repeat>
+    <h:form>
+        <h:commandButton value="End Round" action="#{roundEnd.endRound}"/>
+    </h:form>
+</body>
+</html>
