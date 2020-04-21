@@ -37,6 +37,9 @@ public class GameService implements Serializable {
     }
 
     public int getRoundNr() {
+        return roundNr;
+    }
+    public int getRoundNrWithChange(){
         changeRoundNr();
         return roundNr;
     }
