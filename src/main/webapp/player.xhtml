@@ -13,20 +13,20 @@
 <h:body style="margin-left: 20px">
     <h1>Hello #{countryForPlayer.player.name}</h1>
     <h2>Please select country: </h2>
-    <table>
         <ui:repeat value="#{countryForPlayer.unusedCountries}" var="country">
-            <tr>
-                <h:form>
-                    <td>
-                        <label>#{country.name}</label>
-                    </td>
-                    <td>
-                        <h:commandButton value="Choose Country" action="#{countryForPlayer.chooseCountry(country.id)}" />
-                    </td>
-                </h:form>
-            </tr>
+            <h:form>
+                <table>
+                    <tr>
+                        <td>
+                            <label>#{country.name}</label>
+                        </td>
+                        <td>
+                            <h:commandButton value="Choose Country" action="#{countryForPlayer.chooseCountry(country.id)}" />
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
         </ui:repeat>
-    </table>
 
     <h2>Your countries: </h2>
     <c:if test="#{countryForPlayer.playerCountries != null}">

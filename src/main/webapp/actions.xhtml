@@ -14,16 +14,16 @@
 <body style="margin-left: 20px">
     <h1>Choose actions: </h1>
     <h3>You have #{actionsForPlayer.player.money} priority points to use.</h3>
-    <table>
-        <ui:repeat value="#{actionsForPlayer.playerTerritories}" var="territory">
-            <tr>
-                <h:form>
+    <ui:repeat value="#{actionsForPlayer.playerTerritories}" var="territory">
+        <h:form>
+            <table>
+                <tr>
                     <td>
                         <label>#{territory.name}</label>
                     </td>
                     <td>
                         <h:selectOneMenu value="#{actionsForPlayer.action.action}">
-                            <f:ajax event="valueChange" render="territoryB" listener="#{actionsForPlayer.selectStringValueChanged(territory.id)}" />
+                            <f:ajax event="valueChange" render="territoryB_select" listener="#{actionsForPlayer.selectStringValueChanged(territory.id)}" />
                             <f:selectItem itemValue="collect" itemLabel="Collect Money"/>
                             <f:selectItem itemValue="defend" itemLabel="Defend" />
                             <f:selectItem itemValue="attack" itemLabel="Attack" />
@@ -33,22 +33,22 @@
                     <td>
                         <h:inputText value="#{actionsForPlayer.priority}" converter="javax.faces.Integer">
                             <f:validateLongRange maximum="#{actionsForPlayer.player.money}" minimum="0"/>
+                            <f:ajax event="valueChange"/>
                         </h:inputText>
                     </td>
                     <td>
-                        <h:selectOneMenu id="territoryB" value="#{actionsForPlayer.action.territoryBId}" converter="javax.faces.Integer">
-                            <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="territoryB" itemValue="#{territoryB.id}" itemLabel="#{territoryB.name}"/>
+                        <h:selectOneMenu id="territoryB_select" value="#{actionsForPlayer.territoryBId}" converter="javax.faces.Integer">
+                            <f:selectItems value="#{actionsForPlayer.territoriesForB}" var="Bterritory" itemValue="#{Bterritory.id}" itemLabel="#{Bterritory.name}"/>
+                            <f:ajax event="valueChange"/>
                         </h:selectOneMenu>
                     </td>
                     <td>
                         <h:commandButton value="Add Action" action="#{actionsForPlayer.registerAction(territory.id)}"/>
                     </td>
-                </h:form>
-            </tr>
-
-        </ui:repeat>
-    </table>
-
+                </tr>
+            </table>
+        </h:form>
+    </ui:repeat>
     <h:form>
         <h:commandButton value="End Round" action="#{roundEnd.endRound}"/>
     </h:form>

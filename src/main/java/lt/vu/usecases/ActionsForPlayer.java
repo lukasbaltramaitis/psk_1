@@ -29,8 +29,6 @@ import java.util.List;
 public class ActionsForPlayer implements Serializable {
     @Getter @Setter
     private Player player;
-    @Getter @Setter
-    private int territoryBId;
     @Inject
     private PlayersDAO playersDAO;
     @Inject
@@ -47,6 +45,10 @@ public class ActionsForPlayer implements Serializable {
     private List<Territory>territoriesForB;
     @Getter @Setter
     private int priority;
+    @Getter @Setter
+    private Integer territoryBId;
+    @Getter @Setter
+    private Territory territoryA;
 
     @PostConstruct
     public void init() {
@@ -84,33 +86,41 @@ public class ActionsForPlayer implements Serializable {
                 break;
             case "defend":
             case "collect":
+            default:
                 territoriesForB = new ArrayList<>();
                 break;
-            default:
-                action.setAction("");
-                break;
+
+        }
+        if(territoriesForB.size() > 0){
+            territoryBId = territoriesForB.get(0).getId();
         }
     }
     @Transactional
     public String registerAction(int territoryAId){
         territoryMapper.updateByState(1, territoryAId);
         action.setTerritoryAId(territoryAId);
+        action.setTerritoryBId(territoryBId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
         action.setRoundNr(gameService.getRoundNr());
         action.setPlayerId(player.getId());
         int actionPriority = priority;
         int money = player.getMoney();
         if(actionPriority > money){
-            action.setPriority(money);
+            actionPriority = money;
             money = 0;
         }
         else{
             money = money - actionPriority;
         }
+        String actionString = action.getAction();
+        if(actionString == null){
+            action.setAction("collect");
+        }
+        action.setPriority(actionPriority);
         player.setMoney(money);
         playersDAO.update(player);
         actionsDAO.persist(action);
-        return "actions.xhtml?faces-redirect=true";
+        return "actions.xhtml";
     }
 
     private void loadPlayer(int playerId){

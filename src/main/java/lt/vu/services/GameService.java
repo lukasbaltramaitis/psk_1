@@ -31,14 +31,19 @@ public class GameService implements Serializable {
         return playersNr == playersRegForRndEnd;
     }
     public boolean canStartRound(){
-        if(newRoundNr != roundNr){
-            roundNr = newRoundNr;
-        }
+        changeRoundNr();
         int playersNr = playersDAO.getCount();
         return playersNr == playersRegForRndStart;
     }
 
     public int getRoundNr() {
+        changeRoundNr();
         return roundNr;
+    }
+
+    private void changeRoundNr(){
+        if(newRoundNr != roundNr){
+            roundNr = newRoundNr;
+        }
     }
 }
