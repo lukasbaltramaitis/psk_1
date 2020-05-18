@@ -18,6 +18,7 @@ public class Territory {
     private Collection<Map> mapsById_0;
     private Country countriesByCountryId;
     private Player playersByPlayerId;
+    private int version;
 
     @Id
     @Column(name = "id")
@@ -161,5 +162,15 @@ public class Territory {
 
     public void setPlayersByPlayerId(Player playersByPlayerId) {
         this.playersByPlayerId = playersByPlayerId;
+    }
+
+    @Version
+    @Column(name = "version")
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

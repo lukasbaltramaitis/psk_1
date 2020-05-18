@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import lt.vu.entities.Action;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.PlayerMapper;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.persistence.ActionsDAO;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
+import lt.vu.services.IGameService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -17,6 +19,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+@LoggedInvocation
 @Model
 public class RoundEnd {
     @Inject
@@ -24,7 +27,8 @@ public class RoundEnd {
     @Inject
     private TerritoryMapper territoryMapper;
     @Inject
-    private GameService gameService;
+    @Getter
+    private IGameService gameService;
     @Inject
     private ActionsDAO actionsDAO;
     @Getter @Setter
@@ -34,7 +38,7 @@ public class RoundEnd {
     public void init() {
         playerId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().get("userId").toString());
-        loadActions(gameService.getRoundNr());
+        loadActions(gameService.getRoundNr(false));
     }
     @Transactional
     public String endRound(){

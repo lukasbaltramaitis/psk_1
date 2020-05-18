@@ -144,7 +144,7 @@ public class Action {
     }
 
     @ManyToOne
-    @JoinColumn(name = "territoryAId", referencedColumnName = "id",  insertable = false, updatable = false)
+    @JoinColumn(name = "territoryAId", referencedColumnName = "id", insertable = false, updatable = false)
     public Territory getTerritoriesByTerritoryAId() {
         return territoriesByTerritoryAId;
     }
@@ -154,7 +154,7 @@ public class Action {
     }
 
     @ManyToOne
-    @JoinColumn(name = "territoryBId", referencedColumnName = "id",  insertable = false, updatable = false)
+    @JoinColumn(name = "territoryBId", referencedColumnName = "id", insertable = false, updatable = false)
     public Territory getTerritoriesByTerritoryBId() {
         return territoriesByTerritoryBId;
     }

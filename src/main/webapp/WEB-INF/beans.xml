@@ -9,4 +9,10 @@
     <interceptors>
         <class>lt.vu.interceptors.MethodLogger</class>
     </interceptors>
+    <decorators>
+        <class>lt.vu.services.GameServerDecorator</class>
+    </decorators>
+    <alternatives>
+        <class>lt.vu.services.GameService</class>
+    </alternatives>
 </beans>

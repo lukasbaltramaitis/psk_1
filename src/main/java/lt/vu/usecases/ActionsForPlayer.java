@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Action;
 import lt.vu.entities.Player;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.mybatis.model.Territory;
 import lt.vu.persistence.ActionsDAO;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
+import lt.vu.services.IGameService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@LoggedInvocation
 @Named
 @ViewScoped
 public class ActionsForPlayer implements Serializable {
@@ -40,7 +43,7 @@ public class ActionsForPlayer implements Serializable {
     @Getter @Setter
     private Action action = new Action();
     @Inject
-    private GameService gameService;
+    private IGameService gameService;
     @Getter @Setter
     private List<Territory>territoriesForB;
     @Getter @Setter
@@ -101,7 +104,7 @@ public class ActionsForPlayer implements Serializable {
         action.setTerritoryAId(territoryAId);
         action.setTerritoryBId(territoryBId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        action.setRoundNr(gameService.getRoundNr());
+        action.setRoundNr(gameService.getRoundNr(false));
         action.setPlayerId(player.getId());
         int actionPriority = priority;
         int money = player.getMoney();
