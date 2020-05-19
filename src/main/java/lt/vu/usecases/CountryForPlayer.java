@@ -2,6 +2,7 @@ package lt.vu.usecases;
 
 import lombok.Getter;
 import lt.vu.entities.Player;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.CountryMapper;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.mybatis.model.Country;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+@LoggedInvocation
 @Model
 public class CountryForPlayer {
     @Inject

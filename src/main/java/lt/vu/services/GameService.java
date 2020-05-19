@@ -5,12 +5,14 @@ import lombok.Setter;
 import lt.vu.persistence.PlayersDAO;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.io.Serializable;
 @ApplicationScoped
 @Model
-public class GameService implements Serializable {
+@Alternative
+public class GameService implements IGameService {
     private int playersRegForRndStart = 0;
     private int playersRegForRndEnd = 0;
     @Inject
@@ -19,8 +21,13 @@ public class GameService implements Serializable {
 
     private int newRoundNr = 1;
 
-    public void registerPlayerForRoundStart(){
-        playersRegForRndStart++;
+    public int registerPlayerForRoundStart(){
+        try{
+            Thread.sleep(5000);
+        }
+        catch (InterruptedException ignored){
+        }
+        return playersRegForRndStart++;
     }
     public void registerPlayerForRoundEnd(){
         playersRegForRndEnd++;
@@ -36,15 +43,12 @@ public class GameService implements Serializable {
         return playersNr == playersRegForRndStart;
     }
 
-    public int getRoundNr() {
-        return roundNr;
-    }
-    public int getRoundNrWithChange(){
-        changeRoundNr();
+    @Override
+    public int getRoundNr(boolean change) {
         return roundNr;
     }
 
-    private void changeRoundNr(){
+    public void changeRoundNr(){
         if(newRoundNr != roundNr){
             roundNr = newRoundNr;
         }

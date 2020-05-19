@@ -4,29 +4,38 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Action;
 import lt.vu.entities.Player;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.mybatis.model.Territory;
 import lt.vu.persistence.ActionsDAO;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
+import lt.vu.services.IGameService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
+@LoggedInvocation
 @Named
-@ViewScoped
+@SessionScoped
 public class ActionsForPlayer implements Serializable {
+    private CompletableFuture<Integer> playerStartRoundTask = null;
     @Getter @Setter
     private Player player;
     @Inject
@@ -40,7 +49,7 @@ public class ActionsForPlayer implements Serializable {
     @Getter @Setter
     private Action action = new Action();
     @Inject
-    private GameService gameService;
+    private IGameService gameService;
     @Getter @Setter
     private List<Territory>territoriesForB;
     @Getter @Setter
@@ -59,20 +68,18 @@ public class ActionsForPlayer implements Serializable {
     }
 
     public String startRound(){
-        gameService.registerPlayerForRoundStart();
-        long startTimestamp = System.currentTimeMillis();
-        while(true){
-            if(gameService.canStartRound()){
-                break;
-            }
-            else{
-                long currentTimeStamp = System.currentTimeMillis();
-                if(startTimestamp + 60000 > currentTimeStamp){
-                    break;
-                }
-            }
+        playerStartRoundTask = CompletableFuture.supplyAsync(() -> gameService.registerPlayerForRoundStart());
+        return "waitingRoom.xhtml?faces-redirect=true";
+    }
+
+    private boolean isPlayerStartRoundTaskRunning() {
+        return playerStartRoundTask != null && !playerStartRoundTask.isDone();
+    }
+
+    public void getPlayerStartRoundTaskStatus() throws IOException {
+        if(!isPlayerStartRoundTaskRunning()) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("actions.xhtml?faces-redirect=true");
         }
-        return "actions.xhtml?faces-redirect=true";
     }
 
     public void selectStringValueChanged(int territoryId)
@@ -101,7 +108,7 @@ public class ActionsForPlayer implements Serializable {
         action.setTerritoryAId(territoryAId);
         action.setTerritoryBId(territoryBId);
         action.setCreationDate(new Timestamp(System.currentTimeMillis()));
-        action.setRoundNr(gameService.getRoundNr());
+        action.setRoundNr(gameService.getRoundNr(false));
         action.setPlayerId(player.getId());
         int actionPriority = priority;
         int money = player.getMoney();

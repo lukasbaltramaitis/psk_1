@@ -4,6 +4,7 @@ package lt.vu.usecases;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Player;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.PlayersDAO;
 import lt.vu.services.GameService;
 import lt.vu.services.PasswordGenerator;
@@ -25,12 +26,16 @@ public class Players implements Serializable {
     @Getter @Setter
     private Player playerToCreate = new Player();
 
+    @Inject
+    private PasswordGenerator passwordGenerator;
+
+    @LoggedInvocation
     @Transactional
     public String login(){
         String playerToCreateName = playerToCreate.getName();
         Player player = playersDAO.findByName(playerToCreateName);
         if(player == null){
-            playerToCreate.setPassword("null");
+            playerToCreate.setPassword(passwordGenerator.generatePassword(playerToCreateName));
             playersDAO.persist(playerToCreate);
             player = playerToCreate;
         }

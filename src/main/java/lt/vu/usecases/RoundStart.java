@@ -3,10 +3,12 @@ package lt.vu.usecases;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Player;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.mybatis.dao.TerritoryMapper;
 import lt.vu.mybatis.model.Territory;
 import lt.vu.persistence.ActionsDAO;
 import lt.vu.persistence.PlayersDAO;
+import lt.vu.services.IGameService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -17,6 +19,7 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+@LoggedInvocation
 @ViewScoped
 @Named
 @Getter @Setter
@@ -29,6 +32,9 @@ public class RoundStart implements Serializable {
     private List<Territory> playerTerritories;
     @Getter
     private List<Territory> freeTerritories;
+    @Inject
+    @Getter
+    private IGameService gameService;
 
     private Player player;
 

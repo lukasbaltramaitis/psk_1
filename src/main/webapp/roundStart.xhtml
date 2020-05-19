@@ -10,10 +10,9 @@
       xmlns:f="http://java.sun.com/jsf/core">
 <head>
     <title>Round Start</title>
-    <meta http-equiv="refresh" content="10"/>
 </head>
 <body style="margin-left: 20px">
-    <h1>Round: #{gameService.roundNrWithChange} </h1>
+    <h1>Round: #{roundStart.gameService.getRoundNr(true)} </h1>
     <h2>Delete your lost territories: </h2>
     <h:form>
         <table>
