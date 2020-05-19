@@ -1,7 +1,9 @@
 package lt.vu.services;
 
-public interface IGameService {
-    void registerPlayerForRoundStart();
+import java.io.Serializable;
+
+public interface IGameService extends Serializable {
+    int registerPlayerForRoundStart();
     void registerPlayerForRoundEnd();
     boolean canEndRound();
     boolean canStartRound();

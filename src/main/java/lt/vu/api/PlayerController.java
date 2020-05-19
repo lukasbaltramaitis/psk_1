@@ -40,8 +40,12 @@ public class PlayerController {
     @Path("/")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response create(PlayerDTO newPlayer) {
+        if(newPlayer.getName() == null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         Player player = new Player();
         player.setMoney(newPlayer.getMoney());
         player.setName(newPlayer.getName());
@@ -53,19 +57,26 @@ public class PlayerController {
     @Path("/put/{userId}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response create(PlayerDTO playerToUpdate, @PathParam("userId") int id)
+    public Response update(PlayerDTO playerToUpdate, @PathParam("userId") int id)
     {
         Player player = playersDAO.findOne(id);
         if (player == null) {
             throw new IllegalArgumentException("user id "
                     + id + " not found");
         }
-        player.setName(playerToUpdate.getName());
-        player.setPassword(playerToUpdate.getPassword());
-        player.setMoney(playerToUpdate.getMoney());
+        if (playerToUpdate.getName() != null){
+            player.setName(playerToUpdate.getName());
+        }
+        if (playerToUpdate.getPassword() != null) {
+            player.setPassword(playerToUpdate.getPassword());
+        }
+        if (playerToUpdate.getMoney() != null) {
+            player.setMoney(playerToUpdate.getMoney());
+        }
         playersDAO.update(player);
-        return Response.ok(player).build();
+        return Response.ok(playerToUpdate).build();
     }
 
 }

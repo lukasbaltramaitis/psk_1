@@ -4,8 +4,8 @@ public class SimpleGameService implements IGameService {
     private int registerPlayersNumber = 0;
     private static int roundNr = 0;
     @Override
-    public void registerPlayerForRoundStart() {
-        registerPlayersNumber++;
+    public int registerPlayerForRoundStart() {
+        return registerPlayersNumber++;
     }
 
     @Override

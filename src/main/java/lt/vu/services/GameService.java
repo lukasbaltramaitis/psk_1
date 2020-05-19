@@ -12,7 +12,7 @@ import java.io.Serializable;
 @ApplicationScoped
 @Model
 @Alternative
-public class GameService implements IGameService, Serializable {
+public class GameService implements IGameService {
     private int playersRegForRndStart = 0;
     private int playersRegForRndEnd = 0;
     @Inject
@@ -21,8 +21,13 @@ public class GameService implements IGameService, Serializable {
 
     private int newRoundNr = 1;
 
-    public void registerPlayerForRoundStart(){
-        playersRegForRndStart++;
+    public int registerPlayerForRoundStart(){
+        try{
+            Thread.sleep(5000);
+        }
+        catch (InterruptedException ignored){
+        }
+        return playersRegForRndStart++;
     }
     public void registerPlayerForRoundEnd(){
         playersRegForRndEnd++;
